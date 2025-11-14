@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Good Night Water 🌊</title>
+    <title>Greeting for Water 🌊</title>
     <style>
         * {
             margin: 0;
@@ -13,13 +13,23 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, #0a1929 0%, #1a237e 50%, #4a148c 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             position: relative;
+            transition: background 2s ease;
+        }
+
+        /* Daytime: Soft blue sky */
+        body.daytime {
+            background: linear-gradient(180deg, #87CEEB 0%, #4682B4 100%);
+        }
+
+        /* Nighttime: Deep ocean night */
+        body.nighttime {
+            background: linear-gradient(180deg, #0a1929 0%, #1a237e 50%, #4a148c 100%);
         }
 
         .stars {
@@ -28,6 +38,11 @@
             height: 100%;
             top: 0;
             left: 0;
+            display: none; /* Only show at night */
+        }
+
+        body.nighttime .stars {
+            display: block;
         }
 
         .star {
@@ -66,20 +81,56 @@
         }
 
         h1 {
-            color: #e3f2fd;
             font-size: 3rem;
             margin: 1.5rem 0;
             font-weight: 300;
             letter-spacing: 2px;
+        }
+
+        body.daytime h1 {
+            color: #0a1929;
+            text-shadow: 0 0 30px rgba(100, 181, 246, 0.5);
+        }
+
+        body.nighttime h1 {
+            color: #e3f2fd;
             text-shadow: 0 0 30px rgba(100, 181, 246, 0.7);
         }
 
         .message {
-            color: #bbdefb;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-top: 1rem;
             opacity: 0.9;
             font-weight: 300;
+        }
+
+        body.daytime .message {
+            color: #1a237e;
+        }
+
+        body.nighttime .message {
+            color: #bbdefb;
+        }
+
+        .time-display {
+            font-size: 1rem;
+            margin-top: 2rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+
+        body.daytime .time-display {
+            background: rgba(255, 255, 255, 0.3);
+            color: #0a1929;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        body.nighttime .time-display {
+            background: rgba(0, 0, 0, 0.3);
+            color: #bbdefb;
+            border: 1px solid rgba(187, 222, 251, 0.3);
         }
 
         .moon {
@@ -88,10 +139,15 @@
             right: 50px;
             width: 80px;
             height: 80px;
-            background: #fffde7;
             border-radius: 50%;
-            box-shadow: 0 0 60px rgba(255, 253, 231, 0.8);
+            display: none; /* Only show at night */
             animation: moonGlow 6s ease-in-out infinite;
+        }
+
+        body.nighttime .moon {
+            display: block;
+            background: #fffde7;
+            box-shadow: 0 0 60px rgba(255, 253, 231, 0.8);
         }
 
         @keyframes moonGlow {
@@ -105,9 +161,16 @@
             left: 0;
             width: 100%;
             height: 100px;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%2364b5f6" opacity="0.1"></path></svg>');
             background-size: 1200px 120px;
             animation: wave 15s linear infinite;
+        }
+
+        body.daytime .ripple {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%234682B4" opacity="0.3"></path></svg>');
+        }
+
+        body.nighttime .ripple {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%2364b5f6" opacity="0.1"></path></svg>');
         }
 
         @keyframes wave {
@@ -116,15 +179,16 @@
         }
     </style>
 </head>
-<body>
+<body class="daytime">
     <div class="stars" id="stars"></div>
     <div class="moon"></div>
     <div class="ripple"></div>
     
     <div class="container">
         <div class="wave-emoji">🌊</div>
-        <h1>Good Night, Water</h1>
-        <p class="message">May your dreams flow as peacefully as the tide<br>and your rest be as deep as the ocean.</p>
+        <h1 id="greeting">Hello, Water</h1>
+        <p class="message" id="message">Checking the time in Indonesia...</p>
+        <div class="time-display" id="timeDisplay">Loading...</div>
     </div>
 
     <script>
@@ -136,20 +200,80 @@
             const star = document.createElement('div');
             star.className = 'star';
             
-            // Random size between 1-4px
             const size = Math.random() * 3 + 1;
             star.style.width = `${size}px`;
             star.style.height = `${size}px`;
-            
-            // Random position
             star.style.left = `${Math.random() * 100}%`;
             star.style.top = `${Math.random() * 100}%`;
-            
-            // Random animation delay
             star.style.animationDelay = `${Math.random() * 3}s`;
             
             starsContainer.appendChild(star);
         }
+
+        // Get current time in Indonesia (WIB = UTC+7)
+        function getIndonesiaTime() {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const indonesiaOffset = 7; // WIB is UTC+7
+            return new Date(utc + (3600000 * indonesiaOffset));
+        }
+
+        function updateGreeting() {
+            const indonesiaTime = getIndonesiaTime();
+            const hours = indonesiaTime.getHours();
+            const timeString = indonesiaTime.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                timeZone: 'Asia/Jakarta'
+            });
+            const dateString = indonesiaTime.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'Asia/Jakarta'
+            });
+
+            const body = document.body;
+            const greetingEl = document.getElementById('greeting');
+            const messageEl = document.getElementById('message');
+            const timeDisplayEl = document.getElementById('timeDisplay');
+
+            // Determine time of day in Indonesia
+            let timeOfDay;
+            let greeting;
+            let message;
+
+            if (hours >= 5 && hours < 12) {
+                timeOfDay = 'morning';
+                greeting = 'Good Morning, Water';
+                message = 'Wishing you a day that flows smoothly and peacefully.';
+                body.className = 'daytime';
+            } else if (hours >= 12 && hours < 18) {
+                timeOfDay = 'afternoon';
+                greeting = 'Good Afternoon, Water';
+                message = 'May your day continue to ripple with joy and calm.';
+                body.className = 'daytime';
+            } else if (hours >= 18 && hours < 21) {
+                timeOfDay = 'evening';
+                greeting = 'Good Evening, Water';
+                message = 'The moon is rising over the waves... time to unwind.';
+                body.className = 'nighttime';
+            } else {
+                timeOfDay = 'night';
+                greeting = 'Good Night, Water';
+                message = 'May your dreams flow as peacefully as the tide and your rest be as deep as the ocean.';
+                body.className = 'nighttime';
+            }
+
+            greetingEl.textContent = greeting;
+            messageEl.textContent = message;
+            timeDisplayEl.textContent = `${dateString}, ${timeString} WIB (UTC+7)`;
+        }
+
+        // Update on load and every minute
+        updateGreeting();
+        setInterval(updateGreeting, 60000);
     </script>
 </body>
 </html>
