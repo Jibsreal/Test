@@ -1,242 +1,155 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Slot Experiment - Win Rate 1:5</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-:root {
-  --win-color: #00ff9d;
-  --lose-color: #ff3c78;
-  --bg-main: #121212;
-  --bg-machine: #1e1e1e;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-main);
-  color: white;
-}
-.machine {
-  background: var(--bg-machine);
-  border-radius: 20px;
-  padding: 40px 30px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-  text-align: center;
-  min-width: 400px;
-}
-h1 {
-  color: var(--win-color);
-  margin-bottom: 30px;
-  font-size: 2rem;
-  letter-spacing: 2px;
-}
-.screen {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-bottom: 30px;
-  border: 3px solid #333;
-  border-radius: 15px;
-  padding: 20px;
-  background: #000;
-}
-.reel {
-  width: 100px;
-  height: 100px;
-  background: #111;
-  border: 2px solid #444;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 55px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.reel.spinning {
-  animation: spin 0.3s ease-in-out;
-}
-@keyframes spin {
-  0% { transform: scale(1) rotateX(0deg); }
-  50% { transform: scale(1.1) rotateX(180deg); }
-  100% { transform: scale(1) rotateX(360deg); }
-}
-.button {
-  width: 100%;
-  padding: 20px;
-  border: none;
-  border-radius: 50px;
-  font-size: 20px;
-  font-weight: bold;
-  background: var(--win-color);
-  color: var(--bg-main);
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.button:hover { transform: translateY(-3px); }
-.button:active { transform: translateY(1px); }
-.button:disabled {
-  background: #555;
-  cursor: not-allowed;
-  transform: none;
-}
-.message {
-  margin-top: 25px;
-  font-size: 20px;
-  font-weight: bold;
-  height: 30px;
-}
-.stats {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #333;
-  display: flex;
-  justify-content: space-around;
-  font-size: 14px;
-}
-.stat-item { text-align: center; }
-.stat-value { font-size: 24px; font-weight: bold; }
-.winning { color: var(--win-color); }
-.losing { color: var(--lose-color); }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Night Water 🌊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #0a1929 0%, #1a237e 50%, #4a148c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 2rem;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wave-emoji {
+            font-size: 4rem;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(100, 181, 246, 0.5));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            color: #e3f2fd;
+            font-size: 3rem;
+            margin: 1.5rem 0;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(100, 181, 246, 0.7);
+        }
+
+        .message {
+            color: #bbdefb;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .moon {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 80px;
+            height: 80px;
+            background: #fffde7;
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 253, 231, 0.8);
+            animation: moonGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 60px rgba(255, 253, 231, 0.8); }
+            50% { box-shadow: 0 0 100px rgba(255, 253, 231, 1); }
+        }
+
+        .ripple {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%2364b5f6" opacity="0.1"></path></svg>');
+            background-size: 1200px 120px;
+            animation: wave 15s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1200px; }
+        }
+    </style>
 </head>
 <body>
-
-<div class="machine">
-  <h1>SLOT EXPERIMENT</h1>
-  
-  <div class="screen">
-    <div class="reel" id="reel1">?</div>
-    <div class="reel" id="reel2">?</div>
-    <div class="reel" id="reel3">?</div>
-  </div>
-
-  <button class="button" id="btnSpin">🎰 PUTAR GULUNGAN</button>
-  
-  <div class="message" id="message">Klik PUTAR untuk bermain</div>
-
-  <div class="stats">
-    <div class="stat-item">
-      <div class="stat-value winning" id="winCount">0</div>
-      <div>Menang</div>
+    <div class="stars" id="stars"></div>
+    <div class="moon"></div>
+    <div class="ripple"></div>
+    
+    <div class="container">
+        <div class="wave-emoji">🌊</div>
+        <h1>Good Night, Water</h1>
+        <p class="message">May your dreams flow as peacefully as the tide<br>and your rest be as deep as the ocean.</p>
     </div>
-    <div class="stat-item">
-      <div class="stat-value losing" id="loseCount">0</div>
-      <div>Kalah</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value" id="totalCount">0</div>
-      <div>Total</div>
-    </div>
-  </div>
-</div>
 
-<script>
-// Konfigurasi Win Rate 1:5
-const WIN_PROBABILITY = 1:100; // 16.67% chance menang
-const SYMBOLS = ['🍒','🍋','🍊','🍇','🍉','⭐','7️⃣','💎','🔔','💰'];
-const REEL_IDS = ['reel1', 'reel2', 'reel3'];
-
-// State
-let isSpinning = false;
-let stats = { win: 0, lose: 0, total: 0 };
-
-// DOM Elements
-const reelElements = REEL_IDS.map(id => document.getElementById(id));
-const btnSpin = document.getElementById('btnSpin');
-const message = document.getElementById('message');
-const winCountEl = document.getElementById('winCount');
-const loseCountEl = document.getElementById('loseCount');
-const totalCountEl = document.getElementById('totalCount');
-
-// Pastikan semua elemen ada
-console.log('DOM Check:', { reelElements, btnSpin, message, winCountEl, loseCountEl, totalCountEl });
-
-// Fungsi update statistik
-function updateStats(isWin) {
-  stats.total++;
-  totalCountEl.textContent = stats.total;
-  
-  if (isWin) {
-    stats.win++;
-    winCountEl.textContent = stats.win;
-  } else {
-    stats.lose++;
-    loseCountEl.textContent = stats.lose;
-  }
-}
-
-// Fungsi spin
-function spin() {
-  if (isSpinning) return;
-  
-  isSpinning = true;
-  btnSpin.disabled = true;
-  btnSpin.textContent = '⏳ Memutar...';
-  message.textContent = '';
-  
-  // Animasi spinning
-  reelElements.forEach(reel => reel.classList.add('spinning'));
-  
-  // Simulasikan jeda server (800ms)
-  setTimeout(() => {
-    // Dapatkan hasil berdasarkan win rate
-    const random = Math.random();
-    let resultSymbols;
-    
-    if (random < WIN_PROBABILITY) {
-      // MENANG: Force 3 simbol sama
-      const winningSymbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-      resultSymbols = [winningSymbol, winningSymbol, winningSymbol];
-      console.log('HASIL: MENANG', winningSymbol);
-    } else {
-      // KALAH: 3 simbol acak (bisa sama atau tidak)
-      resultSymbols = [
-        SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-        SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-        SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]
-      ];
-      console.log('HASIL: KALAH', resultSymbols);
-    }
-    
-    // Tampilkan hasil
-    reelElements.forEach((reel, i) => {
-      reel.classList.remove('spinning');
-      reel.textContent = resultSymbols[i];
-    });
-    
-    // Cek apakah menang (3 simbol identik)
-    const isWin = resultSymbols[0] === resultSymbols[1] && resultSymbols[1] === resultSymbols[2];
-    
-    // Update pesan dan statistik
-    if (isWin) {
-      message.textContent = '🎉 JACKPOT! 🎉';
-      message.className = 'message winning';
-    } else {
-      message.textContent = 'Kalah - Coba lagi';
-      message.className = 'message losing';
-    }
-    
-    updateStats(isWin);
-    
-    // Reset tombol
-    isSpinning = false;
-    btnSpin.disabled = false;
-    btnSpin.textContent = '🎰 PUTAR GULUNGAN';
-    
-  }, 800);
-}
-
-// Event listener
-btnSpin.addEventListener('click', spin);
-
-// Inisialisasi awal
-console.log('✅ Script loaded. Ready to play.');
-</script>
-
+    <script>
+        // Generate random stars
+        const starsContainer = document.getElementById('stars');
+        const numberOfStars = 150;
+        
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            // Random size between 1-4px
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            // Random position
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            
+            // Random animation delay
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    </script>
 </body>
 </html>
