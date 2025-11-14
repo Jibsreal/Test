@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- AUTO REFRESH: Page reloads every 1 minute -->
-    <meta http-equiv="refresh" content="60">
     <title>Greeting for Water 🌊</title>
     <style>
         * {
@@ -21,17 +19,17 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            transition: background 2s ease;
+            transition: background 3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* Daytime: Soft blue sky */
         body.daytime {
-            background: linear-gradient(180deg, #87CEEB 0%, #4682B4 100%);
+            background: linear-gradient(180deg, #87CEEB 0%, #4682B4 50%, #5F9EA0 100%);
         }
 
         /* Nighttime: Deep ocean night */
         body.nighttime {
-            background: linear-gradient(180deg, #0a1929 0%, #1a237e 50%, #4a148c 100%);
+            background: linear-gradient(180deg, #0a1929 0%, #1a237e 40%, #4a148c 80%, #311b92 100%);
         }
 
         .stars {
@@ -40,46 +38,85 @@
             height: 100%;
             top: 0;
             left: 0;
-            display: none; /* Only show at night */
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
         }
 
         body.nighttime .stars {
-            display: block;
+            opacity: 1;
         }
 
         .star {
             position: absolute;
             background: white;
             border-radius: 50%;
-            animation: twinkle 3s infinite;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            animation-delay: var(--delay);
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
+            0%, 100% { 
+                opacity: 0.1; 
+                transform: scale(0.8); 
+                filter: blur(0.5px);
+            }
+            50% { 
+                opacity: var(--max-opacity); 
+                transform: scale(1.5); 
+                filter: blur(0px);
+            }
         }
 
         .container {
             text-align: center;
             z-index: 10;
             padding: 2rem;
-            animation: fadeIn 2s ease-out;
+            animation: fadeIn 2s cubic-bezier(0.22, 0.61, 0.36, 1);
+            transform-origin: center;
+            transition: transform 0.5s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            0% { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.95); 
+                filter: blur(10px);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+                filter: blur(0px);
+            }
         }
 
         .wave-emoji {
             font-size: 4rem;
-            animation: float 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px rgba(100, 181, 246, 0.5));
+            animation: float 5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+            filter: drop-shadow(0 0 15px rgba(100, 181, 246, 0.6));
+            transition: filter 0.5s ease;
+        }
+
+        .wave-emoji:hover {
+            filter: drop-shadow(0 0 25px rgba(100, 181, 246, 0.8));
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+            }
+            25% { 
+                transform: translateY(-18px) rotate(5deg); 
+            }
+            50% { 
+                transform: translateY(-8px) rotate(-5deg); 
+            }
+            75% { 
+                transform: translateY(-12px) rotate(3deg); 
+            }
         }
 
         h1 {
@@ -87,16 +124,17 @@
             margin: 1.5rem 0;
             font-weight: 300;
             letter-spacing: 2px;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body.daytime h1 {
             color: #0a1929;
-            text-shadow: 0 0 30px rgba(100, 181, 246, 0.5);
+            text-shadow: 0 0 25px rgba(100, 181, 246, 0.4);
         }
 
         body.nighttime h1 {
             color: #e3f2fd;
-            text-shadow: 0 0 30px rgba(100, 181, 246, 0.7);
+            text-shadow: 0 0 35px rgba(100, 181, 246, 0.8);
         }
 
         .message {
@@ -104,6 +142,19 @@
             margin-top: 1rem;
             opacity: 0.9;
             font-weight: 300;
+            transition: all 1s ease;
+            animation: breathe 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { 
+                opacity: 0.9; 
+                transform: translateY(0);
+            }
+            50% { 
+                opacity: 1; 
+                transform: translateY(-3px);
+            }
         }
 
         body.daytime .message {
@@ -121,18 +172,24 @@
             border-radius: 20px;
             display: inline-block;
             backdrop-filter: blur(10px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .time-display:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         body.daytime .time-display {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.25);
             color: #0a1929;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
         body.nighttime .time-display {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.25);
             color: #bbdefb;
-            border: 1px solid rgba(187, 222, 251, 0.3);
+            border: 1px solid rgba(187, 222, 251, 0.2);
         }
 
         .refresh-indicator {
@@ -143,18 +200,23 @@
             padding: 5px 10px;
             border-radius: 15px;
             backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .refresh-indicator:hover {
+            transform: translateY(-2px);
         }
 
         body.daytime .refresh-indicator {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.25);
             color: #0a1929;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
         body.nighttime .refresh-indicator {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.25);
             color: #bbdefb;
-            border: 1px solid rgba(187, 222, 251, 0.3);
+            border: 1px solid rgba(187, 222, 251, 0.2);
         }
 
         /* Manual refresh button */
@@ -167,12 +229,21 @@
             border: none;
             border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 5px;
+            transform-origin: center;
+        }
+
+        .refresh-button:hover {
+            transform: scale(1.08) translateY(-2px);
+        }
+
+        .refresh-button:active {
+            transform: scale(0.95);
         }
 
         body.daytime .refresh-button {
@@ -183,7 +254,7 @@
 
         body.daytime .refresh-button:hover {
             background: rgba(100, 181, 246, 0.5);
-            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(100, 181, 246, 0.3);
         }
 
         body.nighttime .refresh-button {
@@ -194,7 +265,7 @@
 
         body.nighttime .refresh-button:hover {
             background: rgba(100, 181, 246, 0.3);
-            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(100, 181, 246, 0.2);
         }
 
         .moon {
@@ -204,19 +275,27 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            display: none; /* Only show at night */
-            animation: moonGlow 6s ease-in-out infinite;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: moonGlow 6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+            transform-origin: center;
         }
 
         body.nighttime .moon {
-            display: block;
+            opacity: 1;
             background: #fffde7;
             box-shadow: 0 0 60px rgba(255, 253, 231, 0.8);
         }
 
         @keyframes moonGlow {
-            0%, 100% { box-shadow: 0 0 60px rgba(255, 253, 231, 0.8); }
-            50% { box-shadow: 0 0 100px rgba(255, 253, 231, 1); }
+            0%, 100% { 
+                box-shadow: 0 0 60px rgba(255, 253, 231, 0.8); 
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 100px rgba(255, 253, 231, 1); 
+                transform: scale(1.05);
+            }
         }
 
         .ripple {
@@ -226,7 +305,13 @@
             width: 100%;
             height: 100px;
             background-size: 1200px 120px;
-            animation: wave 15s linear infinite;
+            animation: wave 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            opacity: 0.8;
+            transition: opacity 1s ease;
+        }
+
+        .ripple:hover {
+            opacity: 1;
         }
 
         body.daytime .ripple {
@@ -234,7 +319,7 @@
         }
 
         body.nighttime .ripple {
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%2364b5f6" opacity="0.1"></path></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%2364b5f6" opacity="0.2"></path></svg>');
         }
 
         @keyframes wave {
@@ -265,7 +350,7 @@
     </button>
 
     <script>
-        // Generate random stars
+        // Generate random stars with varied animations
         const starsContainer = document.getElementById('stars');
         const numberOfStars = 150;
         
@@ -278,7 +363,15 @@
             star.style.height = `${size}px`;
             star.style.left = `${Math.random() * 100}%`;
             star.style.top = `${Math.random() * 100}%`;
-            star.style.animationDelay = `${Math.random() * 3}s`;
+            
+            // Random animation properties for more natural twinkling
+            const duration = Math.random() * 4 + 2; // 2-6 seconds
+            const delay = Math.random() * 5; // 0-5 seconds
+            const maxOpacity = Math.random() * 0.8 + 0.5; // 0.5-1.3
+            
+            star.style.setProperty('--duration', `${duration}s`);
+            star.style.setProperty('--delay', `${delay}s`);
+            star.style.setProperty('--max-opacity', maxOpacity);
             
             starsContainer.appendChild(star);
         }
