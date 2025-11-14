@@ -29,7 +29,6 @@
             position: relative;
             transition: background 2s ease;
             will-change: background;
-            /* Hardware acceleration */
             transform: translateZ(0);
             backface-visibility: hidden;
         }
@@ -65,8 +64,8 @@
             background: white;
             border-radius: 50%;
             will-change: transform, opacity;
-            /* Use transform for better performance */
             transform: translateZ(0);
+            animation: twinkle 3s infinite ease-in-out;
         }
 
         @keyframes twinkle {
@@ -84,14 +83,12 @@
             text-align: center;
             z-index: 10;
             padding: var(--spacing-unit);
-            animation: fadeIn 1.5s ease-out;
             max-width: 90vw;
             will-change: transform;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-unit);
         }
 
         .wave-emoji {
@@ -110,10 +107,16 @@
 
         h1 {
             font-size: var(--font-size-h1);
-            margin: var(--spacing-unit) 0;
+            margin: 0;
             font-weight: 300;
             letter-spacing: 2px;
             line-height: 1.2;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         body.daytime h1 {
@@ -128,10 +131,10 @@
 
         .message {
             font-size: var(--font-size-base);
-            margin-top: var(--spacing-unit);
             opacity: 0.9;
             font-weight: 300;
             line-height: 1.4;
+            margin: 0;
         }
 
         body.daytime .message {
@@ -144,13 +147,12 @@
 
         .time-display {
             font-size: calc(var(--font-size-base) * 0.9);
-            margin-top: calc(var(--spacing-unit) * 1.5);
             padding: 0.5rem 1rem;
             border-radius: 15px;
-            display: inline-block;
             backdrop-filter: blur(10px);
             max-width: 90%;
             word-wrap: break-word;
+            margin: 0;
         }
 
         body.daytime .time-display {
@@ -165,35 +167,11 @@
             border: 1px solid rgba(187, 222, 251, 0.2);
         }
 
-        .refresh-indicator {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: calc(var(--font-size-base) * 0.7);
-            padding: 4px 8px;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            white-space: nowrap;
-        }
-
-        body.daytime .refresh-indicator {
-            background: rgba(255, 255, 255, 0.25);
-            color: #0a1929;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        body.nighttime .refresh-indicator {
-            background: rgba(0, 0, 0, 0.25);
-            color: #bbdefb;
-            border: 1px solid rgba(187, 222, 251, 0.2);
-        }
-
-        /* Manual refresh button */
+        /* Centered refresh button */
         .refresh-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 8px 12px;
+            position: relative;
+            margin: 0 auto;
+            padding: 10px 15px;
             font-size: calc(var(--font-size-base) * 0.8);
             border: none;
             border-radius: 20px;
@@ -201,13 +179,13 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             /* Touch-friendly size */
             min-height: 44px;
-            min-width: 44px;
             z-index: 100;
+            margin-top: var(--spacing-unit);
         }
 
         .refresh-button:active {
@@ -232,6 +210,31 @@
 
         body.nighttime .refresh-button:hover {
             background: rgba(100, 181, 246, 0.3);
+        }
+
+        /* Auto-refresh indicator (top-left) */
+        .refresh-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: calc(var(--font-size-base) * 0.7);
+            padding: 4px 8px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+            z-index: 100;
+        }
+
+        body.daytime .refresh-indicator {
+            background: rgba(255, 255, 255, 0.25);
+            color: #0a1929;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        body.nighttime .refresh-indicator {
+            background: rgba(0, 0, 0, 0.25);
+            color: #bbdefb;
+            border: 1px solid rgba(187, 222, 251, 0.2);
         }
 
         .moon {
@@ -301,25 +304,16 @@
 
             .container {
                 padding: 1rem;
+                gap: 0.8rem;
             }
 
             .refresh-button {
-                top: 15px;
-                right: 15px;
-                padding: 6px 10px;
-                min-height: 40px;
-            }
-
-            .refresh-indicator {
-                top: 15px;
-                left: 15px;
+                margin-top: 1rem;
             }
 
             .moon {
                 width: 50px;
                 height: 50px;
-                top: 15px;
-                right: 15px;
             }
         }
 
@@ -329,14 +323,6 @@
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* High DPI screen optimizations */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .star {
-                /* Sharper stars on retina */
-                box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
             }
         }
     </style>
@@ -351,22 +337,22 @@
         <h1 id="greeting">Hello, Water</h1>
         <p class="message" id="message">Checking the time in Indonesia...</p>
         <div class="time-display" id="timeDisplay">Loading...</div>
+        
+        <!-- Centered refresh button -->
+        <button class="refresh-button" onclick="location.reload()" title="Click to refresh now">
+            🔄 Refresh Now
+        </button>
     </div>
 
     <div class="refresh-indicator">
         Auto-refresh: 1 min
     </div>
 
-    <!-- Manual refresh button -->
-    <button class="refresh-button" onclick="location.reload()" title="Click to refresh now">
-        🔄 Refresh
-    </button>
-
     <script>
-        // Optimized star generation - reduced count for mobile
+        // Optimized star generation
         const starsContainer = document.getElementById('stars');
         const isMobile = window.innerWidth < 768;
-        const numberOfStars = isMobile ? 30 : 60; // Reduce stars on mobile
+        const numberOfStars = isMobile ? 30 : 60;
         
         for (let i = 0; i < numberOfStars; i++) {
             const star = document.createElement('div');
@@ -378,7 +364,6 @@
             star.style.left = `${Math.random() * 100}%`;
             star.style.top = `${Math.random() * 100}%`;
             
-            // Simple, performant animation
             const duration = Math.random() * 3 + 2;
             const delay = Math.random() * 3;
             star.style.animation = `twinkle ${duration}s ${delay}s infinite ease-in-out`;
@@ -386,12 +371,11 @@
             starsContainer.appendChild(star);
         }
 
-        // Throttled resize handler for responsiveness
+        // Throttled resize handler
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                // Re-generate stars if crossing mobile/desktop breakpoint
                 const newIsMobile = window.innerWidth < 768;
                 if (newIsMobile !== isMobile) {
                     location.reload();
@@ -403,7 +387,7 @@
         function getIndonesiaTime() {
             const now = new Date();
             const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const indonesiaOffset = 7; // WIB is UTC+7
+            const indonesiaOffset = 7;
             return new Date(utc + (3600000 * indonesiaOffset));
         }
 
@@ -460,14 +444,9 @@
             timeDisplayEl.textContent = `${dateString}, ${timeString} WIB (UTC+7)`;
         }
 
-        // Update on load and every minute
+        // Update on load and every minute (text-only refresh)
         updateGreeting();
         setInterval(updateGreeting, 60000);
-
-        // Prefers reduced motion
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            document.documentElement.style.setProperty('--animation-duration', '0s');
-        }
     </script>
 </body>
 </html>
