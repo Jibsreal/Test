@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- AUTO REFRESH: Page reloads every 1 minute -->
+    <meta http-equiv="refresh" content="60">
     <title>Greeting for Water 🌊</title>
     <style>
         * {
@@ -133,6 +135,68 @@
             border: 1px solid rgba(187, 222, 251, 0.3);
         }
 
+        .refresh-indicator {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        body.daytime .refresh-indicator {
+            background: rgba(255, 255, 255, 0.3);
+            color: #0a1929;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        body.nighttime .refresh-indicator {
+            background: rgba(0, 0, 0, 0.3);
+            color: #bbdefb;
+            border: 1px solid rgba(187, 222, 251, 0.3);
+        }
+
+        /* Manual refresh button */
+        .refresh-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        body.daytime .refresh-button {
+            background: rgba(100, 181, 246, 0.3);
+            color: #0a1929;
+            border: 1px solid rgba(100, 181, 246, 0.5);
+        }
+
+        body.daytime .refresh-button:hover {
+            background: rgba(100, 181, 246, 0.5);
+            transform: scale(1.05);
+        }
+
+        body.nighttime .refresh-button {
+            background: rgba(100, 181, 246, 0.2);
+            color: #bbdefb;
+            border: 1px solid rgba(100, 181, 246, 0.4);
+        }
+
+        body.nighttime .refresh-button:hover {
+            background: rgba(100, 181, 246, 0.3);
+            transform: scale(1.05);
+        }
+
         .moon {
             position: absolute;
             top: 50px;
@@ -191,6 +255,15 @@
         <div class="time-display" id="timeDisplay">Loading...</div>
     </div>
 
+    <div class="refresh-indicator">
+        Auto-refresh: 1 min
+    </div>
+
+    <!-- Manual refresh button -->
+    <button class="refresh-button" onclick="location.reload()" title="Click to refresh now">
+        🔄 Refresh
+    </button>
+
     <script>
         // Generate random stars
         const starsContainer = document.getElementById('stars');
@@ -246,22 +319,22 @@
 
             if (hours >= 5 && hours < 12) {
                 timeOfDay = 'morning';
-                greeting = 'Good Morning, Water';
+                greeting = 'Good Morning <3, Water';
                 message = 'Wishing you a day that flows smoothly and peacefully.';
                 body.className = 'daytime';
             } else if (hours >= 12 && hours < 18) {
                 timeOfDay = 'afternoon';
-                greeting = 'Good Afternoon, Water';
+                greeting = 'Good Afternoon😋, Water';
                 message = 'May your day continue to ripple with joy and calm.';
                 body.className = 'daytime';
             } else if (hours >= 18 && hours < 21) {
                 timeOfDay = 'evening';
-                greeting = 'Good Evening, Water';
+                greeting = 'Good Evening😋, Water';
                 message = 'The moon is rising over the waves... time to unwind.';
                 body.className = 'nighttime';
             } else {
                 timeOfDay = 'night';
-                greeting = 'Good Night, Water';
+                greeting = 'Good Night😴, Water';
                 message = 'May your dreams flow as peacefully as the tide and your rest be as deep as the ocean.';
                 body.className = 'nighttime';
             }
